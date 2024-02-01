@@ -4,10 +4,10 @@ import "./HomePage.css";
 function HomePage() {
   const [count, setCount] = useState(0);
   const [timer, setTimer] = useState(0);
-  const [score, setScore] = useState();
+  const [score, setScore] = useState(0);
   useEffect(() => {
     if (timer === 0) {
-      if (count > 0 && timer < 1) {
+      if (count > score && timer < 1) {
         localStorage.setItem("score", Number(count));
         setScore(Number(localStorage.getItem("score")));
       }
@@ -25,15 +25,16 @@ function HomePage() {
   return (
     <div className="home-container">
       <div className="home-timer">timer:{timer}</div>
-      {score && (
+      {score && score > 0 ? (
         <div>
-          {count > score ? (
+            <h3 style={{textAlign: 'right'}}>High score {score}</h3>
+          {count === score  ? (
             <h2>New high score {score} </h2>
           ) : (
-            <h2>Score {score}</h2>
+            <h2>Score {count}</h2>
           )}
         </div>
-      )}
+      ) : null }
       <div className="home-count">{count}</div>
       <div className="btn-container">
         <button
